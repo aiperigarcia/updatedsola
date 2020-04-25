@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Sola</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/077191d827.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="order-last" class="img" style="background-image: url(images/bg_1.jpg);">
+      <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+        </button>
+      </div>
+      <div class="">
+        <h1><a href="index.html" class="logo"><i class="far fa-bell"></i> Sola</a></h1>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a href="/newatt"><span class="fa fa-eye mr-3"></span> Attendance</a>
+          </li>
+          <li>
+            <a href="/homework"><span class="fa fa-list mr-3"></span> Homework</a>
+          </li>
+          <li>
+            <a href="/progress"><span class="fa fa-chart-bar mr-3"></span> Progress</a>
+          </li>
+          <li>
+            <a href="/profile"><span class="far fa-address-card mr-3"></span> Profile</a>
+          </li>
+          <li>
+            <a href="/logout"><span class="fa fa-sign-out-alt mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+
+      </div>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+      <section class="hero">
+        <section class="displayInput">
+          <% if (user.local.usertype === 'teacher') { %>
+          <form id="listInput" action="/newatt" method="post">
+            <input type="text" name="name" placeholder="Student Name" class="inputMain">
+              <button type="submit" name="button">Add</button>
+          </form>
+          <% } %>
+
+        </section>
+        <section class="shownList">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th name="monday"=>Monday</th>
+                <th name="tuesday">Tuesday</th>
+                <th name="wednesday">Wednesday</th>
+                <th name="thursday">Thursday</th>
+                <th name="friday">Friday</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0; i< present.length; i++) {%>
+                <tr>
+                  <td class="name"><%= present[i].name %></td>
+                  <td class="days" data-id='<%= present[i]._id %>' data-day='monday'><%= present[i].week.monday %></td>
+                  <td class="days" data-id='<%= present[i]._id %>' data-day='tuesday'><%= present[i].week.tuesday %></td>
+                  <td class="days" data-id='<%= present[i]._id %>' data-day='wednesday'><%= present[i].week.wednesday %></td>
+                  <td class="days" data-id='<%= present[i]._id %>' data-day='thursday'><%= present[i].week.thursday %></td>
+                  <td class="days" data-id='<%= present[i]._id %>' data-day='friday'><%= present[i].week.friday %></td>
+                </tr>
+                  <% } %>
+                </tr>
+
+            </tbody>
+          </table>
+
+          <button type="button" name="button" id="submit">Submit</button>
+          <button type="button" name="button" formaction="/clearatt" id="clear">Clear</button>
+        </section>
+
+
+    </div>
+  </div>
+
+  <script src="js/jquery.copy.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.copy.js"></script>
+  <script src="newatt.js"></script>
+</body>
+
+</html>

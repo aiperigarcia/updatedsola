@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Sola</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/077191d827.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="order-last" class="img" style="background-image: url(images/bg_1.jpg);">
+      <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+        </button>
+      </div>
+      <div class="">
+        <h1><a href="index.html" class="logo"><i class="far fa-bell"></i> Sola</a></h1>
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a href="/newatt"><span class="fa fa-eye mr-3"></span> Attendance</a>
+          </li>
+          <li>
+            <a href="/homework"><span class="fa fa-list mr-3"></span> Homework</a>
+          </li>
+          <li>
+            <a href="/progress"><span class="fa fa-chart-bar mr-3"></span> Progress</a>
+          </li>
+          <li>
+            <a href="/profile"><span class="far fa-address-card mr-3"></span> Profile</a>
+          </li>
+          <li>
+            <a href="/logout"><span class="fa fa-sign-out-alt mr-3"></span> Sign Out</a>
+          </li>
+        </ul>
+
+
+      </div>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+      <section class="hero">
+        <section class="displayInput">
+          <% if (user.local.usertype === 'teacher') { %>
+          <form id="listInput" action="/homework" method="post">
+            <select type="text" name="day" class="inputMain">
+              <option value="monday">Monday</option>
+              <option value="tuesday">Tuesday</option>
+              <option value="wednesday">Wednesday</option>
+              <option value="thursday">Thursday</option>
+              <option value="friday">Friday</option>
+            </select>
+            <select type="text" name="homeworkType" class="inputMain">
+              <option value="read">Read</option>
+              <option value="watch">Watch</option>
+              <option value="do">Do</option>
+              <option value="write">Write</option>
+            </select>
+            <input name="message" placeholder="Enter Task" id="listItem" type="text" class="inputMain">
+            <button type="submit" id="addToList">Add</button>
+          </form>
+          <% } %>
+
+        </section>
+        <section class="shownList">
+
+          <ul id="addUl">
+            <h3>Monday</h3>
+            <% for(var i=0; i<messages.length; i++) {%>
+            <% if (messages[i].day == 'monday') { %>
+            <li class="toDoList">
+
+              <% if (user.local.usertype === 'parent') { %>
+              <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
+              <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
+              <% } %>
+              <span id="homework"><%= messages[i].homeworkType %>:</span>
+              <span><%= messages[i].message %></span>
+              <% if (user.local.usertype === 'teacher') { %>
+              <span class="trash"><i class="fa fa-trash" aria-hidden="true"></i></span>
+              <% } %>
+            </li>
+            <% } %>
+            <% } %>
+          </ul>
+
+          <ul id="addUl">
+            <h3>Tuesday</h3>
+            <% for(var i=0; i<messages.length; i++) {%>
+            <% if (messages[i].day == 'tuesday') { %>
+            <li class="toDoList">
+              <% if (user.local.usertype === 'parent') { %>
+              <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
+              <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
+              <% } %>
+              <span id="homework"><%= messages[i].homeworkType %>:</span>
+              <span><%= messages[i].message %></span>
+              <% if (user.local.usertype === 'teacher') { %>
+              <span class="trash"><i class="fa fa-trash" aria-hidden="true"></i></span>
+              <% } %>
+            </li>
+            <% } %>
+            <% } %>
+          </ul>
+
+          <ul id="addUl">
+            <h3>Wednesday</h3>
+            <% for(var i=0; i<messages.length; i++) {%>
+            <% if (messages[i].day == 'wednesday') { %>
+            <li class="toDoList">
+              <% if (user.local.usertype === 'parent') { %>
+              <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
+              <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
+              <% } %>
+              <span id="homework"><%= messages[i].homeworkType %>:</span>
+              <span><%= messages[i].message %></span>
+              <% if (user.local.usertype === 'teacher') { %>
+              <span class="trash"><i class="fa fa-trash" aria-hidden="true"></i></span>
+              <% } %>
+            </li>
+            <% } %>
+            <% } %>
+          </ul>
+
+          <ul id="addUl">
+            <h3>Thursday</h3>
+            <% for(var i=0; i<messages.length; i++) {%>
+            <% if (messages[i].day == 'thursday') { %>
+            <li class="toDoList">
+              <% if (user.local.usertype === 'parent') { %>
+              <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
+              <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
+              <% } %>
+              <span id="homework"><%= messages[i].homeworkType %>:</span>
+              <span><%= messages[i].message %></span>
+              <% if (user.local.usertype === 'teacher') { %>
+              <span class="trash"><i class="fa fa-trash" aria-hidden="true"></i></span>
+              <% } %>
+            </li>
+            <% } %>
+            <% } %>
+          </ul>
+
+          <ul id="addUl">
+            <h3>Friday</h3>
+            <% for(var i=0; i<messages.length; i++) {%>
+            <% if (messages[i].day == 'friday') { %>
+            <li class="toDoList">
+              <% if (user.local.usertype === 'parent') { %>
+              <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
+              <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
+              <% } %>
+              <span id="homework"><%= messages[i].homeworkType %>:</span>
+              <span><%= messages[i].message %></span>
+              <% if (user.local.usertype === 'teacher') { %>
+              <span class="trash"><i class="fa fa-trash" aria-hidden="true"></i></span>
+              <% } %>
+            </li>
+            <% } %>
+            <% } %>
+          </ul>
+
+        </section>
+
+
+    </div>
+  </div>
+
+  <script src="js/jquery.copy.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.copy.js"></script>
+  <script src="homework.js"></script>
+</body>
+
+</html>

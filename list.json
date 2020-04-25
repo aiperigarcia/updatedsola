@@ -1,0 +1,29 @@
+attendance = {
+  1: "Orson Saint Fleur",
+  2: "Divya Sharma",
+  3: "Zahmir Jacobs",
+  4: "Aiperi Abdimalikova",
+  5: "Nyah Macklin",
+  6: "Vanessa Charles",
+  7: "Miggie Garcia",
+  8: "Abigail Ezedonmwen",
+  9: "Sam DeCoteau",
+  10: "Kenneth Cruz",
+  11: "Calvin Benson",
+  12: "Victor Tran",
+  13: "Asiah Bennett",
+  14: "Eric Espinoza",
+  15: "Ilunga Lebreton",
+  16: "Zikre Haimanot",
+  17: "Thais Nascimento",
+  18: "Sebastian Vivas",
+  19: "Finesse Carter",
+  20: "Chi Igbokwe",
+  21: "Jessie Mills-Hubbard",
+  22: "Anjelica Bethea"
+}
+
+
+Homework = {
+  "math": ["finish test", "solve first problem", ""]
+}
