@@ -47,27 +47,30 @@
 
     <div id="content" class="p-4 p-md-5 pt-5">
       <div class="mainpage">
-        <h2>Messages</h2>
-        <div class="chatroom">
-          <ul class="messagesParent">
-            <% for(var i=0; i < chatroom.length; i++) {%>
-              <% if (chatroom[i].to == parentInfo.local.email) { %>
-            <li class="parentMessage">
+        <h2 id="h2">Messages</h2>
+        <div class="mss">
+          <div class="chatroom">
+            <ul class="messagesParent">
+              <% for(var i=0; i < chatroom.length; i++) {%>
+                <% if (chatroom[i].to == parentInfo.local.email) { %>
+              <li class="parentMessage">
+                <span><%= chatroom[i].from%> </span>
+                <span><%= chatroom[i].msg %></span>
+              </li>
+              <% } else if (chatroom[i].from == parentInfo.local.email) { %>
+            <li class="teacherMessage">
               <span><%= chatroom[i].from%> </span>
               <span><%= chatroom[i].msg %></span>
             </li>
-            <% } else if (chatroom[i].from == parentInfo.local.email) { %>
-          <li class="teacherMessage">
-            <span><%= chatroom[i].from%> </span>
-            <span><%= chatroom[i].msg %></span>
-          </li>
+                <% } %>
               <% } %>
-            <% } %>
-          </ul>
+            </ul>
 
+          </div>
         </div>
+
          <div class="messageBox">
-           <h2>Send a message</h2>
+           <h2 id="h2">Send a message</h2>
            <% if (user.local.email) { %>
            <form action="/chat" method="POST">
              <select class="parents" name="to">

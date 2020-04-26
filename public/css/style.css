@@ -342,14 +342,24 @@ th{
 
 .mainpage{
   display: inline-block;
-}
-.mainpage h2{
-    text-align: center;
-    margin-left: 20%;
-    color: darkslateblue;
-    margin-bottom: 3%;
+  width: 100%;
 }
 
+.mainpage h2{
+    text-align: center;
+    color: darkslateblue;
+    margin-bottom: 2%;
+}
+#h2{
+  margin-top: 2%;
+}
+.mss{
+  margin-left: 30%;
+  background-image: url(images/overlay.png), url(images/header.svg), linear-gradient(315deg, #3e8df1 0%, #49bfc5 100%);
+  border-radius: 2%;
+  min-height: 550px;
+  width: 50%;
+}
 .chatroom{
   display: inline-block;
   width: 120%;
@@ -359,18 +369,13 @@ th{
   width: 50%;
   padding: 2%;
 }
-.messagesParent{
-  display: inline-block;
-  margin-left: 10%;
-  background-image: url(images/overlay.png), url(images/header.svg), linear-gradient(315deg, #3e8df1 0%, #49bfc5 100%);
-  border-radius: 2%;
-}
+
 .messagesParent li{
    border-radius:12px 12px 12px 0;
    border: .1em solid darkslateblue;
    display: inline-block;
    margin-bottom: 2%;
-   margin-right: 6%;
+   margin-right: 23%;
    margin-top: 5%;
    background-color: white;
    color: #1a0888;
@@ -397,7 +402,7 @@ th{
 }
 
 .messageBox select{
-  margin-left: 40%;
+  margin-left: 35%;
   height: 39px;
 }
 
