@@ -63,9 +63,9 @@ button.addEventListener('click', () => {
   .then(data => {
     console.log(data)
   })
-  // setTimeout(() => {
-  //   window.location.reload(true)
-  // }, 100)
+  setTimeout(() => {
+    window.location.reload(true)
+  }, 100)
 })
 
 let clear = document.querySelector('#clear')
@@ -84,4 +84,7 @@ clear.addEventListener('click', () => {
   .then(data => {
     console.log(data)
   })
+  setTimeout(() => {
+    window.location.reload(true)
+  }, 100)
 })

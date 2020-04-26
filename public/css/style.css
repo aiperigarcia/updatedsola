@@ -16,6 +16,7 @@
   border-radius: 3% !important;
   padding: 4% !important;
   color: white !important;
+  width: 50% !important;
 }
 
 #loginButton{
@@ -31,7 +32,6 @@
           /* //////////////// */
     /* Main Style For All Pages*/
          /* //////////////// */
-
 
 body{
   font-family: 'Roboto Condensed', sans-serif !important;
@@ -51,17 +51,115 @@ background:#edeeef;
 /* //////////////// */
     /* Profile Style */
 /* //////////////// */
+#mainBlock{
+  background-image: url(images/overlay.png), url(images/header.svg), linear-gradient(315deg, #2f89fc 0%, #49bfc5 100%);
+  opacity: .8;
+  color: white;
+  height: 780px;
+  border-radius: 2%;
+  font-size: 18px;
+}
 
+#mainBlock h3{
+  padding-top: 5%;
+  color: darkslateblue;
+  color: #170b63;
+  font-size: 30px;
+  font-weight: bold;
+}
+.well{
+  text-align: center;
+  width: 100%;
+}
+.well p{
+  margin-top: 3%;
+}
 
+#connections{
+  text-align: center;
+  width: 100%;
+}
 
+#buttonProfile{
+  background: #013696 !important;
+  color: white !important;
+  border: none !important;
+  font-size: 16px !important;
+  border-radius: 20% !important;
+}
 
+#connections i{
+   color: #0615c8;
+ }
 
+#connections li{
+    list-style: none;
+  }
 
+#messageSpan{
+    font-weight: bold;
+    font-size: 23px;
+    margin-left: 2%;
+    color: #0b00b5;
+}
+
+.hide{
+  display: none !important;
+}
 
 
 /* //////////////// */
     /* Attendance */
 /* //////////////// */
+
+.attMain{
+  width: 100%;
+  margin-top: -4%;
+  padding-right: 2%;
+}
+
+.attinput h2{
+  text-align: center;
+  margin-top: 2%;
+  color: #1a0688;
+  font-weight: bold;
+}
+
+.attinput span{
+  margin-left: 31%;
+  font-size: 17px;
+  color: #1358ad;
+  font-weight: bold;
+}
+
+#addButton{
+  border: .5px solid darkslateblue;
+  font-size: 18px;
+  background-color: #edeeef;
+  color: darkslateblue;
+  border-radius: 17%;
+}
+#addinput{
+  border: .5px solid darkslateblue;
+  font-size: 19px;
+  background-color: #edeeef;
+  margin: 2% 2% 0 40%;
+  border-radius: 5%;
+  text-align: center;
+  color: darkslateblue !important;
+}
+
+#submit, #clear{
+  background-color: #4535a7;
+  border-radius: 18%;
+  margin: 1% 1%;
+  font-size: 20px;
+  color: white;
+}
+
+#submit{
+  margin-left: 40%;
+}
 
 .attendance-table{
   overflow: scroll;
@@ -70,6 +168,7 @@ table {
   border-collapse: collapse;
   background-image: url(images/overlay.png), url(images/header.svg), linear-gradient(315deg, #2f89fc 0%, #49bfc5 100%);
   border-radius: 2%;
+  height: 800px;
 }
 
 td, th {
@@ -85,6 +184,11 @@ th{
   width: 800px;
 }
 
+/* //////////////// */
+    /* Homework */
+/* //////////////// */
+
+
 .shownList{
   margin-top: 5%;
   margin-left: 5%;
@@ -94,12 +198,6 @@ th{
 .toDoList{
   list-style: none;
 }
-
-
-/* //////////////// */
-    /* Homework */
-/* //////////////// */
-
 
 #addUl{
   text-align: center;
@@ -1015,8 +1113,7 @@ pre {
   .col-sm-6 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 50%;
-    flex: 0 0 50%;
-    max-width: 50%; }
+    flex: 0 0 50%;}
   .col-sm-7 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 58.33333%;

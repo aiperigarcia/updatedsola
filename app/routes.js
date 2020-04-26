@@ -126,41 +126,6 @@ module.exports = function(app, passport, db, ObjectId) {
   })
 
 
-  // Attendace ==============================
-  // app.get('/attendance', isLoggedIn, function(req, res) {
-  //   db.collection('attendance').find().toArray((err, result) => {
-  //     if (err) return console.log(err)
-  //     res.render('attendance.ejs', {
-  //       user: req.user,
-  //       attendance: result
-  //     })
-  //   })
-  // });
-  //
-  //
-  //
-  // app.post('/updateattendance', (req, res) => {
-  //   Object.keys(req.body).forEach((name, i) => {
-  //     db.collection('attendance').updateOne({
-  //         name: name
-  //       },
-  //       {
-  //         $set: {
-  //            name: name,
-  //            attendance: req.body[name]
-  //         }
-  //       },
-  //       {
-  //         upsert: true
-  //       },
-  //       (err, result) => {
-  //         if (err) return console.log(err);
-  //         console.log('saved to database');
-  //       })
-  //    })
-  // })
-  //
-
 // New Attendace ==============================
 
 app.get('/newatt', isLoggedIn, function(req, res) {
@@ -192,9 +157,7 @@ app.post('/newatt', (req, res) => {
 
 app.delete('/clearatt', (req, res) => {
   console.log('delete');
-  db.collection('present').remove({
-
-  }, (err, result) => {
+  db.collection('present').remove({}, (err, result) => {
     if (err) return res.send(500, err)
     res.send('Message deleted!')
   })
@@ -355,49 +318,6 @@ app.put('/newatt', (req, res) => {
 
 
 
-  // message board routes ===============================================================
-
-  app.post('/messages', (req, res) => {
-    db.collection('messages').save({
-      name: req.body.name,
-      msg: req.body.msg
-    }, (err, result) => {
-      if (err) return console.log(err)
-      console.log('saved to database')
-      res.redirect('/profile')
-    })
-  })
-
-  app.put('/messages', (req, res) => {
-    db.collection('messages')
-      .findOneAndUpdate({
-        name: req.body.name,
-        msg: req.body.msg
-      }, {
-        $set: {
-          thumbUp: req.body.thumbUp + 1
-        }
-      }, {
-        sort: {
-          _id: -1
-        },
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
-  })
-
-
-  app.delete('/messages', (req, res) => {
-    db.collection('messages').findOneAndDelete({
-      name: req.body.name,
-      msg: req.body.msg
-    }, (err, result) => {
-      if (err) return res.send(500, err)
-      res.send('Message deleted!')
-    })
-  })
 
   // =============================================================================
   // AUTHENTICATE (FIRST LOGIN) ==================================================

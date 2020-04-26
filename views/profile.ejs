@@ -49,10 +49,10 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
-      <div class="container">
-        <div class="col-sm-6">
+      <div class="profile">
+        <div class="col-sm-6" id="mainBlock">
           <div class="well">
-            <h3><span class="fa fa-user"></span> Local</h3>
+            <h3>💎 My Information</h3>
 
             <% if (user.local.email) { %>
             <p>
@@ -60,14 +60,16 @@
               <strong>email</strong>: <span class="teacherEmail"><%= user.local.email %></span><br>
               <strong>password</strong>: <%= user.local.password %>
             </p>
-
-            <a href="/unlink/local" class="btn btn-default">Unlink</a>
-            <% } else { %>
-            <a href="/connect/local" class="btn btn-default">Connect Local</a>
+            <button id="buttonProfile"><a href="/unlink/local"></a>Unlink</button>
             <% } %>
+
           </div>
-          <div class="">
-            <h2>My Connections</h2>
+          <div id="connections">
+            <h3>📬 My Connections</h3>
+            <span id="messageSpan">Send a Message</span>
+            <% if(user.local.usertype == 'parent') {%>
+               <p id="parentSpan">You can send message to teachers after they add you to their parent list</p>
+              <% } %>
             <ul>
               <% for(var i=0; i < user.local.myconnections.length; i++) {%>
                <li>
@@ -79,7 +81,7 @@
 
             <% if(user.local.usertype == 'teacher') {%>
 
-            <h3>Add a parent</h3>
+            <h3>🔽 Add a parent</h3>
             <ul>
               <% for(var i=0; i < allusers.length; i++) {%>
               <% if (allusers[i].local.usertype == "parent" && allusers[i].local.myconnections.length === 0) { %>

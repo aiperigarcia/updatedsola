@@ -46,12 +46,14 @@
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5 pt-5">
-      <section class="hero">
-        <section class="displayInput">
+      <section class="attMain">
+        <section class="attinput">
           <% if (user.local.usertype === 'teacher') { %>
-          <form id="listInput" action="/newatt" method="post">
-            <input type="text" name="name" placeholder="Student Name" class="inputMain">
-              <button type="submit" name="button">Add</button>
+            <h2>Weekly Attendance</h2>
+            <span>Each class has eight students, add them to update their attendance</span>
+          <form action="/newatt" method="post">
+            <input type="text" name="name" placeholder="Student Name" id="addinput">
+              <button type="submit" name="button" id="addButton">Add</button>
           </form>
           <% } %>
 
@@ -83,11 +85,12 @@
 
             </tbody>
           </table>
-
+          <% if (user.local.usertype === 'teacher') { %>
           <button type="button" name="button" id="submit">Submit</button>
           <button type="button" name="button" formaction="/clearatt" id="clear">Clear</button>
+          <% } %>
         </section>
-
+    </section>
 
     </div>
   </div>
