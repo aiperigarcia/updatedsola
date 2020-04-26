@@ -19,7 +19,7 @@
         </button>
       </div>
       <div class="">
-        <h1><a href="http://localhost:4444/" class="logo"><i class="far fa-bell"></i> Sola</a></h1>
+        <h1><a href="index.html" class="logo"><i class="far fa-bell"></i> Sola</a></h1>
         <ul class="list-unstyled components mb-5">
           <li class="active">
             <a href="/newatt"><span class="fa fa-eye mr-3"></span> Attendance</a>
@@ -47,19 +47,18 @@
 
     <div id="content" class="p-4 p-md-5 pt-5">
       <div class="mainpage">
-        <h3>Messages</h3>
+        <h2>Messages</h2>
         <div class="chatroom">
           <ul class="messagesParent">
-
             <% for(var i=0; i < chatroom.length; i++) {%>
               <% if (chatroom[i].to == parentInfo.local.email) { %>
-            <li class="message">
-              <span><%= chatroom[i].name%> </span>
+            <li class="parentMessage">
+              <span><%= chatroom[i].from%> </span>
               <span><%= chatroom[i].msg %></span>
             </li>
             <% } else if (chatroom[i].from == parentInfo.local.email) { %>
-          <li class="message">
-            <span><%= chatroom[i].name%> </span>
+          <li class="teacherMessage">
+            <span><%= chatroom[i].from%> </span>
             <span><%= chatroom[i].msg %></span>
           </li>
               <% } %>
@@ -74,10 +73,10 @@
              <select class="parents" name="to">
                  <option value="<%= parentInfo.local.email %>"><%= parentInfo.local.email %></option>
              </select>
-             <input type="text" name="id" value="<%= parentInfo._id %>">
-             <input type="text" value="<%= user.local.email %>" name="from">
-             <input type="text" placeholder="message" name="msg">
-             <button type="submit"><i class="fas fa-paper-plane"></i></button>
+             <input id="hideItem" type="text" name="id" value="<%= parentInfo._id %>">
+             <input id="hideItem" type="text" value="<%= user.local.email %>" name="from">
+             <input class="parents" type="text" placeholder="message" name="msg">
+             <button class="parents" type="submit"><i class="fas fa-paper-plane"></i></button>
            </form>
            <% } %>
          </div>

@@ -343,30 +343,47 @@ th{
 .mainpage{
   display: inline-block;
 }
+.mainpage h2{
+    text-align: center;
+    margin-left: 20%;
+    color: darkslateblue;
+    margin-bottom: 3%;
+}
+
 .chatroom{
   display: inline-block;
-  width: 100%;
+  width: 120%;
 }
 .chatroom li{
   list-style: none;
-  width: 100%;
-  padding: 3%;
+  width: 50%;
+  padding: 2%;
 }
 .messagesParent{
-  float: left;
-  display: inline;
-  margin-right: 1%;
+  display: inline-block;
+  margin-left: 10%;
+  background-image: url(images/overlay.png), url(images/header.svg), linear-gradient(315deg, #3e8df1 0%, #49bfc5 100%);
+  border-radius: 2%;
 }
 .messagesParent li{
    border-radius:12px 12px 12px 0;
    border: .1em solid darkslateblue;
    display: inline-block;
+   margin-bottom: 2%;
+   margin-right: 6%;
+   margin-top: 5%;
+   background-color: white;
+   color: #1a0888;
+   font-size: 15px;
+   font-weight: bold;
 }
 
-.messagesTeacher{
+.teacherMessage{
   float: right;
-  margin-left: 1%;
+  margin-left: 30%;
+  border-radius: 10px 0 10px 10px !important;
 }
+
 
 .messagesTeacher li{
   border: .1em solid darkslateblue;
@@ -374,6 +391,29 @@ th{
   display: inline-block;
 }
 
+
+#hideItem{
+  display: none !important;
+}
+
+.messageBox select{
+  margin-left: 40%;
+  height: 39px;
+}
+
+.parents{
+    margin-right: 2%;
+    border: .5px solid darkslateblue;
+    font-size: 20px;
+    background-color: #edeeef;
+    color: darkslateblue;
+    border-radius: 8%;
+    text-align: center;
+}
+
+.messageBox button{
+  width: 5%;
+}
 /* //////////////// */
     /* Other Style */
 /* //////////////// */

@@ -24,6 +24,7 @@ Array.from(trash).forEach(function(element) {
 
 Array.from(completed).forEach(function(element) {
   element.addEventListener('click', function() {
+    
     const message = this.parentNode.childNodes[7].innerText
     let completed = false
     if(element.checked !== completed){
