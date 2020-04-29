@@ -6,4 +6,3 @@ Sola is an application that will help parents to keep track of their child's pro
 If student missed a class their parents will immediately receive notification to their phone about their absence.
 
 ![Books](1.png)
-![Books](3.png)
