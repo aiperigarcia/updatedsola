@@ -32,7 +32,7 @@ button.addEventListener('click', () => {
   let userId = Object.keys(data)
   let dayId = Object.values(data)
   console.log(data);
-  fetch('http://localhost:4444/newatt', {
+  fetch('/newatt', {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ button.addEventListener('click', () => {
 let clear = document.querySelector('#clear')
 clear.addEventListener('click', () => {
   let data = {}
-  fetch('http://localhost:4444/clearatt', {
+  fetch('/clearatt', {
 		method: 'delete',
 		headers: {
 			'Content-Type': 'application/json'

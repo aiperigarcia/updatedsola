@@ -6,7 +6,7 @@ Array.from(trash).forEach(function(element) {
   element.addEventListener('click', function() {
     const homeworkType = this.parentNode.childNodes[1].innerText
     const message = this.parentNode.childNodes[3].innerText
-    fetch('homework', {
+    fetch('/homework', {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ Array.from(trash).forEach(function(element) {
 
 Array.from(completed).forEach(function(element) {
   element.addEventListener('click', function() {
-    
+
     const message = this.parentNode.childNodes[7].innerText
     let completed = false
     if(element.checked !== completed){
