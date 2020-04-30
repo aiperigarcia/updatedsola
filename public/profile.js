@@ -4,7 +4,9 @@ const teacher = document.querySelector('.teacherEmail').innerText
 Array.from(add).forEach(function(element) {
   element.addEventListener('click', function() {
     const parentId = this.parentNode.parentNode.childNodes[1].innerText
+    console.log(parentId, 'parentId');
     const parent = this.parentNode.parentNode.childNodes[3].innerText
+    console.log(parent, 'parent Name');
     Promise.all([
       fetch('/addparent', {
           method: 'put',

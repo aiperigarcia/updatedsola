@@ -11,6 +11,7 @@ module.exports = function(app, passport, db, ObjectId) {
   app.get('/profile', isLoggedIn, function(req, res) {
     db.collection('users').find().toArray((err, result) => {
       if (err) return console.log(err)
+      console.log(req.user.local.myconnections, "userrr");
       res.render('profile.ejs', {
         user: req.user,
         allusers: result
@@ -75,45 +76,80 @@ module.exports = function(app, passport, db, ObjectId) {
 
   // HOMEWORK ==============================
   app.get('/homework', isLoggedIn, function(req, res) {
+    var uId = ObjectId(req.session.passport.user)
+    console.log(req.session.passport);
+    db.collection('users').find({_id:uId}).toArray((err, user) => {
+    console.log(user);
+    let usertype = user[0].local.usertype
     db.collection('messages').find().toArray((err, result) => {
-      if (err) return console.log(err)
-      res.render('homework.ejs', {
-        user: req.user,
-        messages: result
+        db.collection('messages').find({'studentId': uId}).toArray((err, task) => {
+          if (err) return console.log(err)
+          res.render('homework.ejs', {
+            user: req.user,
+            messages: result
+          })
+        })
       })
     })
-  });
+  })
 
   app.post('/homework', (req, res) => {
-    db.collection('messages').save({
-      day: req.body.day,
-      homeworkType: req.body.homeworkType,
-      message: req.body.message,
-      completed: false
-    }, (err, result) => {
-      if (err) return console.log(err)
-      console.log('saved to database')
-      res.redirect('/homework')
+    //var uId = ObjectId(req.session.passport.user)
+    db.collection('users').find({_id: ObjectId(req.body.userId)}).toArray((err, result) => {
+      db.collection('messages').save({
+        user: req.body.userId,
+        name: result[0].local.firstName + " " + result[0].local.lastName,
+        day: req.body.day,
+        homeworkType: req.body.homeworkType,
+        message: req.body.message,
+        completed: false,
+        studentListHw: []
+      }, (err, result) => {
+        if (err) return console.log(err)
+        console.log('saved to database')
+        res.redirect('/homework')
+      })
     })
   })
 
   app.put('/completedStatus', (req, res) => {
-    console.log(req.body.completed)
-    console.log(req.body.message);
+    var uId = ObjectId(req.session.passport.user)
+    console.log(req.body.completed, 'completed')
+    console.log(req.body.message, 'messages');
+    console.log(req.body.studentId, "studentID");
+    db.collection('messages').find({message: req.body.message}).toArray((err, result) => {
+      console.log(result, 'resultttt');
+      let studentCompleted
+      if (req.body.completed === false) {
+          let homeworkCheck = result[0].studentListHw
+          console.log(homeworkCheck, "expect []");
+          studentCompleted = result[0].studentListHw.filter(student => student.student !== req.body.studentId)
+      } else {
+        console.log("true");
+        studentCompleted = result[0].studentListHw
+        studentCompleted.push({ student: req.body.studentId })
+        console.log(studentCompleted, 'newadded');
+      }
     db.collection('messages')
       .findOneAndUpdate({
         message: req.body.message
-      }, {
+      },
+      {
         $set: {
-          completed: req.body.completed
+          user: req.body.studentId,
+          completed: req.body.completed,
+          studentListHw: studentCompleted
         }
-      }, {
+      },
+      {
         upsert: false,
         new: true
-      }, (err, result) => {
+      },
+      (err, result) => {
         if (err) return res.send(err)
         res.send(result)
       })
+    })
   })
 
   app.delete('/homework', (req, res) => {
@@ -217,6 +253,8 @@ app.put('/newatt', (req, res) => {
        }
      }
    ])
+   if (err) return console.log(err)
+   res.send('success')
   })
 
 
@@ -268,22 +306,74 @@ app.put('/newatt', (req, res) => {
 
   // chat ==============================
   app.get('/messages/:parentId', isLoggedIn, function(req, res) {
-    var parentId = ObjectId(req.params.parentId)
+    let userId = ObjectId(req.session.passport.user)
+    let teacherId = ObjectId(req.params.parentId)
+    console.log(req.session.passport, 'email');
+    console.log(req.params.parentId, "bla bla");
+    db.collection('users').find({'_id':userId}).toArray((err, userId) => {
+      console.log(userId, 'userIIID');
+      let parentEmail = userId[0].local.email
+      console.log(typeof parentEmail, parentEmail, "eeeemaaail")
     db.collection('users').find({
-      "_id": parentId
-    }).toArray((err, result) => {
+      '_id': teacherId
+    }).toArray((err, teacher) => {
+      let teacherEmail = teacher[0].local.email
+        console.log(teacherEmail, "resuuult");
       db.collection('chatroom').find().toArray((err, messages) => {
-          if (err) return console.log(err)
+        console.log(messages, "msm");
+        if (req.session.passport !== teacherId) {
+          console.log('hereeee');
+          console.log(parentEmail);
+          console.log(teacherEmail);
+          let parentM = messages.filter(pm =>
+          pm.from ===  teacherEmail || pm.to === teacherEmail)
+          console.log(parentM, "parentyy");
+          messages = parentM
+        }else {
+          let teacherM = messages.filter(
+          pm.from ===  parentEmail || pm.to === parentEmail)
+          messages = teacherM
+        }
           res.render('messages.ejs', {
             user: req.user,
-            parentInfo: result[0],
+            parentInfo: userId[0],
             chatroom: messages
           })
         })
       })
-  });
+  })
+})
+//
+// app.get('/teachermessages/:teacherId', isLoggedIn, function(req, res) {
+//   let userId = ObjectId(req.session.passport.user)
+//   let teacherId = ObjectId(req.params.parentId)
+//   console.log(req.session.passport, 'email');
+//   console.log(req.params.parentId, "bla bla");
+//   db.collection('users').find({'_id':userId}).toArray((err, userId) => {
+//     console.log(userId, 'userIIID');
+//     let parentEmail = userId[0].local.email
+//     console.log(typeof parentEmail, parentEmail, "eeeemaaail")
+//   db.collection('users').find({
+//     '_id': teacherId
+//   }).toArray((err, teacher) => {
+//     let teacherEmail = teacher[0].local.email
+//       console.log(teacherEmail, "resuuult");
+//     db.collection('chatroom').find().toArray((err, messages) => {
+//       console.log(messages, "msm");
+//       let parentM = messages.filter(pm => pm.from ===  parentEmail || pm.from === teacherEmail)
+//       console.log(parentM, "parentssss");
+//         res.render('messages.ejs', {
+//           user: req.user,
+//           parentInfo: userId[0],
+//           chatroom: messages
+//         })
+//       })
+//     })
+// })
+// })
 
   app.post('/chat', (req, res) => {
+    console.log(req.body)
     let param = req.body.id
         db.collection('chatroom').save({
           from: req.body.from,

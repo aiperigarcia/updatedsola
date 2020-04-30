@@ -17,18 +17,22 @@ Array.from(trash).forEach(function(element) {
       })
     }).then(function(response) {
       console.log(response)
-      window.location.reload()
+      window.location.reload(true)
     })
   });
 });
 
 Array.from(completed).forEach(function(element) {
   element.addEventListener('click', function() {
-
-    const message = this.parentNode.childNodes[7].innerText
-    let completed = false
-    if(element.checked !== completed){
-      completed = !completed
+    console.log(element.checked, "toggle");
+    let userId = document.querySelector('#studentId').getAttribute("data-id")
+    console.log(userId);
+    const message = this.parentNode.childNodes[9].innerText
+    console.log(message);
+    let checked = false
+    if(element.checked !== checked){
+      console.log("condition");
+      checked = 'checked'
     }
     fetch('/completedStatus', {
         method: 'put',
@@ -37,15 +41,50 @@ Array.from(completed).forEach(function(element) {
         },
 
         body: JSON.stringify({
+          'studentId': userId,
           'message': message,
-          'completed': completed
+          'completed': checked
         })
       })
       .then(response => {
         if (response.ok) return response.json()
       })
       .then(data => {
-        window.location.reload()
+        //window.location.reload()
       })
   });
 })
+
+let add = document.querySelector("#addToList")
+
+
+add.addEventListener('click', function(e) {
+  e.preventDefault()
+  let userId = document.querySelector('#teacherId').getAttribute("data-teacher")
+  let day = document.querySelector('#inputDay').value
+  let task = document.querySelector('#inputTask').value
+  let message = document.querySelector('#listItem').value
+  console.log(userId, "first")
+  fetch('/homework', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        'userId': userId,
+        'day': day,
+        'homeworkType': task,
+        'message': message
+      })
+    })
+    .then(response => {
+      if (response.ok) return response.json()
+    })
+    .then(data => {
+      console.log(data);
+    })
+    setTimeout(() => {
+      window.location.reload(true)
+    }, 100)
+});

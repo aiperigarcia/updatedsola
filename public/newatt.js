@@ -58,6 +58,7 @@ button.addEventListener('click', () => {
     })
 	})
   .then(response => {
+    console.log(response, 'this is res');
     if (response.ok) return response.json()
   })
   .then(data => {
