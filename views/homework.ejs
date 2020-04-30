@@ -79,7 +79,7 @@
             <li class="toDoList">
 
               <% if (user.local.usertype === 'parent') { %>
-              <span id="studentId" data-id="<%= user._id %>"><%= messages[i].name %></span>
+              <span id="studentIdOne" data-id="<%= user._id %>"<%= messages[i].name %></span>
               <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
               <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
               <% } %>
@@ -99,7 +99,7 @@
             <% if (messages[i].day == 'tuesday') { %>
             <li class="toDoList">
               <% if (user.local.usertype === 'parent') { %>
-              <span id="studentId" data-id="<%= user._id %>"><%= messages[i].name %></span>
+              <span id="studentId" data-id="<%= user._id %>" id="hidden"><%= messages[i].name %></span>
               <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
               <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
               <% } %>
@@ -119,7 +119,7 @@
             <% if (messages[i].day == 'wednesday') { %>
             <li class="toDoList">
               <% if (user.local.usertype === 'parent') { %>
-              <span id="studentId" data-id="<%= user._id %>"><%= messages[i].name %></span>
+              <span id="studentId" data-id="<%= user._id %>" id="hidden"><%= messages[i].name %></span>
               <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
               <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
               <% } %>
@@ -139,7 +139,7 @@
             <% if (messages[i].day == 'thursday') { %>
             <li class="toDoList">
               <% if (user.local.usertype === 'parent') { %>
-              <span id="studentId" data-id="<%= user._id %>"><%= messages[i].name %></span>
+              <span id="studentId" data-id="<%= user._id %>" id="hidden"><%= messages[i].name %></span>
               <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
               <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
               <% } %>
@@ -159,7 +159,7 @@
             <% if (messages[i].day == 'friday') { %>
             <li class="toDoList">
               <% if (user.local.usertype === 'parent') { %>
-              <span id="studentId" data-id="<%= user._id %>"><%= messages[i].name %></span>
+              <span id="studentId" data-id="<%= user._id %>" id="hidden"><%= messages[i].name %></span>
               <input type="hidden" name="objectId" value="<%= messages[i]._id%>">
               <input type="checkbox" name="completed" class="checkbox" <% if(messages[i].completed) { %> checked <% }%>>
               <% } %>

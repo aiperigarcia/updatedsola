@@ -188,6 +188,9 @@ th{
     /* Homework */
 /* //////////////// */
 
+#studentId{
+  display: none !important;
+}
 
 .shownList{
   margin-top: 5%;
