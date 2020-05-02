@@ -188,7 +188,7 @@ th{
     /* Homework */
 /* //////////////// */
 
-#studentId{
+.hidden{
   display: none !important;
 }
 
@@ -198,6 +198,7 @@ th{
   display: flex;
   flex-flow: row wrap;
 }
+
 .toDoList{
   list-style: none;
 }
