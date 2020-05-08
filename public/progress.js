@@ -10,7 +10,7 @@ fetch('progressChart', {
   .then(data => {
     console.log(data)
     let student = data.map(e => e.student )
-    console.log(student);
+    console.log(student)
     let grade = data.map(e => Number(e.grade) )
     console.log(grade);
     let myChart = document.getElementById('myChart').getContext('2d');
@@ -27,7 +27,6 @@ fetch('progressChart', {
         datasets: [{
           label: 'Grade',
           data: grade,
-          // backgroundColor:'green',
           backgroundColor: [
             'rgba(255, 99, 132, 0.7)',
             'rgba(0, 0, 128, 0.7)',

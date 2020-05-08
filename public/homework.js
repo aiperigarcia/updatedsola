@@ -24,14 +24,10 @@ Array.from(trash).forEach(function(element) {
 
 Array.from(completed).forEach(function(element) {
   element.addEventListener('click', function() {
-    console.log(element.checked, "toggle");
     let userId = document.querySelector('#studentId').getAttribute("data-id")
-    console.log(userId);
     const message = this.parentNode.childNodes[9].innerText
-    console.log(message);
     let checked = false
     if(element.checked !== checked){
-      console.log("condition");
       checked = 'checked'
     }
     fetch('/completedStatus', {
@@ -39,7 +35,6 @@ Array.from(completed).forEach(function(element) {
         headers: {
           'Content-Type': 'application/json'
         },
-
         body: JSON.stringify({
           'studentId': userId,
           'message': message,
@@ -50,7 +45,7 @@ Array.from(completed).forEach(function(element) {
         if (response.ok) return response.json()
       })
       .then(data => {
-        //window.location.reload()
+        window.location.reload()
       })
   });
 })
@@ -64,13 +59,11 @@ add.addEventListener('click', function(e) {
   let day = document.querySelector('#inputDay').value
   let task = document.querySelector('#inputTask').value
   let message = document.querySelector('#listItem').value
-  console.log(userId, "first")
   fetch('/homework', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
-
       body: JSON.stringify({
         'userId': userId,
         'day': day,

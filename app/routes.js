@@ -2,16 +2,17 @@ module.exports = function(app, passport, db, ObjectId) {
 
   // normal routes ===============================================================
 
+
   // show the home page (will also have our login links)
   app.get('/', function(req, res) {
     res.render('index.ejs');
   });
 
+
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function(req, res) {
     db.collection('users').find().toArray((err, result) => {
       if (err) return console.log(err)
-      console.log(req.user.local.myconnections, "userrr");
       res.render('profile.ejs', {
         user: req.user,
         allusers: result
@@ -74,15 +75,159 @@ module.exports = function(app, passport, db, ObjectId) {
   });
 
 
+
+  // Attendace ==============================
+
+  app.get('/newatt', isLoggedIn, function(req, res) {
+    db.collection('present').find().toArray((err, result) => {
+      if (err) return console.log(err)
+      res.render('newatt.ejs', {
+        user: req.user,
+        present: result
+      })
+    })
+  });
+
+  app.post('/newatt', (req, res) => {
+    db.collection('present').save({
+      name: req.body.name,
+      week: {
+        monday: '',
+        tuesday: '',
+        wednesday: '',
+        thursday: '',
+        friday: ''
+      }
+    }, (err, result) => {
+      if (err) return console.log(err)
+      res.redirect('/newatt')
+    })
+  })
+
+  app.delete('/clearatt', (req, res) => {
+    db.collection('present').remove({}, (err, result) => {
+      if (err) return res.send(500, err)
+      res.send('Message deleted!')
+    })
+  })
+
+  app.put('/newatt', (req, res) => {
+    let dayId = `week.${req.body.dayId}`
+    db.collection('present')
+      .bulkWrite([{
+          updateOne: {
+            'filter': {
+              _id: ObjectId(req.body.userIdOne)
+            },
+            'update': {
+              $set: {
+                [dayId]: req.body.attendanceOne
+              }
+            }
+          }
+        },
+        {
+          updateOne: {
+            'filter': {
+              _id: ObjectId(req.body.userIdTwo)
+            },
+            'update': {
+              $set: {
+                [dayId]: req.body.attendanceTwo
+              }
+            }
+          }
+        },
+        {
+          updateOne: {
+            'filter': {
+              _id: ObjectId(req.body.userIdThree)
+            },
+            'update': {
+              $set: {
+                [dayId]: req.body.attendanceThree
+              }
+            }
+          }
+        },
+        {
+          updateOne: {
+            'filter': {
+              _id: ObjectId(req.body.userIdFour)
+            },
+            'update': {
+              $set: {
+                [dayId]: req.body.attendanceFour
+              }
+            }
+          }
+        },
+        {
+          updateOne: {
+            'filter': {
+              _id: ObjectId(req.body.userIdFive)
+            },
+            'update': {
+              $set: {
+                [dayId]: req.body.attendanceFive
+              }
+            }
+          }
+        },
+        {
+          updateOne: {
+            'filter': {
+              _id: ObjectId(req.body.userIdSix)
+            },
+            'update': {
+              $set: {
+                [dayId]: req.body.attendanceSix
+              }
+            }
+          }
+        },
+        {
+          updateOne: {
+            'filter': {
+              _id: ObjectId(req.body.userIdSeven)
+            },
+            'update': {
+              $set: {
+                [dayId]: req.body.attendanceSeven
+              }
+            }
+          }
+        },
+        {
+          updateOne: {
+            'filter': {
+              _id: ObjectId(req.body.userIdEight)
+            },
+            'update': {
+              $set: {
+                [dayId]: req.body.attendanceEight
+              }
+            }
+          }
+        }
+      ])
+    if (err) return console.log(err)
+    res.send('success')
+  })
+
+
+
   // HOMEWORK ==============================
   app.get('/homework', isLoggedIn, function(req, res) {
     var uId = ObjectId(req.session.passport.user)
-    console.log(req.session.passport);
-    db.collection('users').find({_id:uId}).toArray((err, user) => {
-    console.log(user);
-    let usertype = user[0].local.usertype
-    db.collection('messages').find().toArray((err, result) => {
-        db.collection('messages').find({'studentId': uId}).toArray((err, task) => {
+    db.collection('users').find({
+      _id: uId
+    }).toArray((err, user) => {
+      let usertype = user[0].local.usertype
+      db.collection('messages').find().toArray((err, result) => {
+        db.collection('messages').find({
+          'studentId': uId
+        }).toArray((err, task) => {
           if (err) return console.log(err)
           res.render('homework.ejs', {
             user: req.user,
@@ -94,8 +239,9 @@ module.exports = function(app, passport, db, ObjectId) {
   })
 
   app.post('/homework', (req, res) => {
-    //var uId = ObjectId(req.session.passport.user)
-    db.collection('users').find({_id: ObjectId(req.body.userId)}).toArray((err, result) => {
+    db.collection('users').find({
+      _id: ObjectId(req.body.userId)
+    }).toArray((err, result) => {
       db.collection('messages').save({
         user: req.body.userId,
         name: result[0].local.firstName + " " + result[0].local.lastName,
@@ -106,7 +252,6 @@ module.exports = function(app, passport, db, ObjectId) {
         studentListHw: []
       }, (err, result) => {
         if (err) return console.log(err)
-        console.log('saved to database')
         res.redirect('/homework')
       })
     })
@@ -114,41 +259,36 @@ module.exports = function(app, passport, db, ObjectId) {
 
   app.put('/completedStatus', (req, res) => {
     var uId = ObjectId(req.session.passport.user)
-    console.log(req.body.completed, 'completed')
-    console.log(req.body.message, 'messages');
-    console.log(req.body.studentId, "studentID");
-    db.collection('messages').find({message: req.body.message}).toArray((err, result) => {
-      console.log(result, 'resultttt');
+    db.collection('messages').find({
+      message: req.body.message
+    }).toArray((err, result) => {
       let studentCompleted
       if (req.body.completed === false) {
-          let homeworkCheck = result[0].studentListHw
-          console.log(homeworkCheck, "expect []");
-          studentCompleted = result[0].studentListHw.filter(student => student.student !== req.body.studentId)
+        let homeworkCheck = result[0].studentListHw
+        studentCompleted = result[0].studentListHw.filter(student => student.student !== req.body.studentId)
       } else {
-        console.log("true");
         studentCompleted = result[0].studentListHw
-        studentCompleted.push({ student: req.body.studentId })
-        console.log(studentCompleted, 'newadded');
+        studentCompleted.push({
+          student: req.body.studentId
+        })
       }
-    db.collection('messages')
-      .findOneAndUpdate({
-        message: req.body.message
-      },
-      {
-        $set: {
-          user: req.body.studentId,
-          completed: req.body.completed,
-          studentListHw: studentCompleted
-        }
-      },
-      {
-        upsert: false,
-        new: true
-      },
-      (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
+      db.collection('messages')
+        .findOneAndUpdate({
+            message: req.body.message
+          }, {
+            $set: {
+              user: req.body.studentId,
+              completed: req.body.completed,
+              studentListHw: studentCompleted
+            }
+          }, {
+            upsert: false,
+            new: true
+          },
+          (err, result) => {
+            if (err) return res.send(err)
+            res.send(result)
+          })
     })
   })
 
@@ -162,106 +302,11 @@ module.exports = function(app, passport, db, ObjectId) {
   })
 
 
-// New Attendace ==============================
-
-app.get('/newatt', isLoggedIn, function(req, res) {
-  db.collection('present').find().toArray((err, result) => {
-    if (err) return console.log(err)
-    res.render('newatt.ejs', {
-      user: req.user,
-      present: result
-    })
-  })
-});
-
-app.post('/newatt', (req, res) => {
-  db.collection('present').save({
-    name: req.body.name,
-    week: {
-      monday: '',
-      tuesday: '',
-      wednesday: '',
-      thursday: '',
-      friday: ''
-    }
-  },(err, result) => {
-    if (err) return console.log(err)
-    console.log('saved to database')
-    res.redirect('/newatt')
-  })
-})
-
-app.delete('/clearatt', (req, res) => {
-  console.log('delete');
-  db.collection('present').remove({}, (err, result) => {
-    if (err) return res.send(500, err)
-    res.send('Message deleted!')
-  })
-})
-
-app.put('/newatt', (req, res) => {
-  console.log(req.body);
-  let dayId = `week.${req.body.dayId}`
-  db.collection('present')
-    .bulkWrite([
-     {
-       updateOne: {
-         'filter': { _id: ObjectId(req.body.userIdOne)},
-         'update': { $set: { [dayId]: req.body.attendanceOne}}
-       }
-     },
-     {
-       updateOne: {
-         'filter': { _id: ObjectId(req.body.userIdTwo)},
-         'update': { $set: { [dayId]: req.body.attendanceTwo}}
-       }
-     },
-     {
-       updateOne: {
-         'filter': { _id: ObjectId(req.body.userIdThree)},
-         'update': { $set: { [dayId]: req.body.attendanceThree}}
-       }
-     },
-     {
-       updateOne: {
-         'filter': { _id: ObjectId(req.body.userIdFour)},
-         'update': { $set: { [dayId]: req.body.attendanceFour}}
-       }
-     },
-     {
-       updateOne: {
-         'filter': { _id: ObjectId(req.body.userIdFive)},
-         'update': { $set: { [dayId]: req.body.attendanceFive}}
-       }
-     },
-     {
-       updateOne: {
-         'filter': { _id: ObjectId(req.body.userIdSix)},
-         'update': { $set: { [dayId]: req.body.attendanceSix}}
-       }
-     },
-     {
-       updateOne: {
-         'filter': { _id: ObjectId(req.body.userIdSeven)},
-         'update': { $set: { [dayId]: req.body.attendanceSeven}}
-       }
-     },
-     {
-       updateOne: {
-         'filter': { _id: ObjectId(req.body.userIdEight)},
-         'update': { $set: { [dayId]: req.body.attendanceEight}}
-       }
-     }
-   ])
-   if (err) return console.log(err)
-   res.send('success')
-  })
-
 
   // Progress ==============================
+
   app.get('/progress', isLoggedIn, function(req, res) {
     db.collection('chart').find().toArray((err, result) => {
-      console.log(result)
       if (err) return console.log(err)
       res.render('progress.ejs', {
         user: req.user,
@@ -272,7 +317,6 @@ app.put('/newatt', (req, res) => {
 
   app.get('/progressChart', isLoggedIn, function(req, res) {
     db.collection('chart').find().toArray((err, result) => {
-      console.log(result)
       if (err) return console.log(err)
       res.json(result)
     })
@@ -280,60 +324,40 @@ app.put('/newatt', (req, res) => {
 
 
   app.post('/gradeChart', (req, res) => {
-    console.log(req.body)
     db.collection('chart').save({
       student: req.body.student,
       grade: req.body.grade
     }, (err, result) => {
       if (err) return console.log(err)
-      console.log('saved to database')
       res.redirect('/progress')
     })
   })
 
 
-  // Events ==============================
-  app.get('/events', isLoggedIn, function(req, res) {
-    db.collection('messages').find().toArray((err, result) => {
-      if (err) return console.log(err)
-      res.render('events.ejs', {
-        user: req.user,
-        messages: result
-      })
-    })
-  });
 
+  // Chat ==============================
 
-  // chat ==============================
   app.get('/messages/:parentId', isLoggedIn, function(req, res) {
     let userId = ObjectId(req.session.passport.user)
     let teacherId = ObjectId(req.params.parentId)
-    console.log(req.session.passport, 'email');
-    console.log(req.params.parentId, "bla bla");
-    db.collection('users').find({'_id':userId}).toArray((err, userId) => {
-      console.log(userId, 'userIIID');
-      let parentEmail = userId[0].local.email
-      console.log(typeof parentEmail, parentEmail, "eeeemaaail")
     db.collection('users').find({
-      '_id': teacherId
-    }).toArray((err, teacher) => {
-      let teacherEmail = teacher[0].local.email
-        console.log(teacherEmail, "resuuult");
-      db.collection('chatroom').find().toArray((err, messages) => {
-        console.log(messages, "msm");
-        if (req.session.passport !== teacherId) {
-          console.log('hereeee');
-          console.log(parentEmail);
-          console.log(teacherEmail);
-          let parentM = messages.filter(pm =>
-          pm.from ===  teacherEmail || pm.to === teacherEmail)
-          console.log(parentM, "parentyy");
-          messages = parentM
-        }else {
-          let teacherM = messages.filter(
-          pm.from ===  parentEmail || pm.to === parentEmail)
-          messages = teacherM
-        }
+      '_id': userId
+    }).toArray((err, userId) => {
+      let parentEmail = userId[0].local.email
+      db.collection('users').find({
+        '_id': teacherId
+      }).toArray((err, teacher) => {
+        let teacherEmail = teacher[0].local.email
+        db.collection('chatroom').find().toArray((err, messages) => {
+          if (req.session.passport !== teacherId) {
+            let parentM = messages.filter(pm =>
+              pm.from === teacherEmail || pm.to === teacherEmail)
+            messages = parentM
+          } else {
+            let teacherM = messages.filter(
+              pm.from === parentEmail || pm.to === parentEmail)
+            messages = teacherM
+          }
           res.render('messages.ejs', {
             user: req.user,
             parentInfo: userId[0],
@@ -341,58 +365,32 @@ app.put('/newatt', (req, res) => {
           })
         })
       })
+    })
   })
-})
-//
-// app.get('/teachermessages/:teacherId', isLoggedIn, function(req, res) {
-//   let userId = ObjectId(req.session.passport.user)
-//   let teacherId = ObjectId(req.params.parentId)
-//   console.log(req.session.passport, 'email');
-//   console.log(req.params.parentId, "bla bla");
-//   db.collection('users').find({'_id':userId}).toArray((err, userId) => {
-//     console.log(userId, 'userIIID');
-//     let parentEmail = userId[0].local.email
-//     console.log(typeof parentEmail, parentEmail, "eeeemaaail")
-//   db.collection('users').find({
-//     '_id': teacherId
-//   }).toArray((err, teacher) => {
-//     let teacherEmail = teacher[0].local.email
-//       console.log(teacherEmail, "resuuult");
-//     db.collection('chatroom').find().toArray((err, messages) => {
-//       console.log(messages, "msm");
-//       let parentM = messages.filter(pm => pm.from ===  parentEmail || pm.from === teacherEmail)
-//       console.log(parentM, "parentssss");
-//         res.render('messages.ejs', {
-//           user: req.user,
-//           parentInfo: userId[0],
-//           chatroom: messages
-//         })
-//       })
-//     })
-// })
-// })
+
 
   app.post('/chat', (req, res) => {
-    console.log(req.body)
     let param = req.body.id
-        db.collection('chatroom').save({
-          from: req.body.from,
-          to: req.body.to,
-          msg: req.body.msg
-        }, (err, result) => {
-          if (err) return console.log(err)
-          console.log('saved to database')
-          res.redirect(`/messages/${param}`)
-        })
-      })
+    db.collection('chatroom').save({
+      from: req.body.from,
+      to: req.body.to,
+      msg: req.body.msg
+    }, (err, result) => {
+      if (err) return console.log(err)
+      res.redirect(`/messages/${param}`)
+    })
+  })
 
 
-      app.delete('/chat', (req, res) => {
-        db.collection('chatroom').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
-          if (err) return res.send(500, err)
-          res.send('Message deleted!')
-        })
-      })
+  app.delete('/chat', (req, res) => {
+    db.collection('chatroom').findOneAndDelete({
+      name: req.body.name,
+      msg: req.body.msg
+    }, (err, result) => {
+      if (err) return res.send(500, err)
+      res.send('Message deleted!')
+    })
+  })
 
 
   // PARENT INFO ==============================
