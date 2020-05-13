@@ -6,3 +6,14 @@ Sola is an application that will help parents to keep track of their child's pro
 If student missed a class their parents will immediately receive notification to their phone about their absence.
 
 ![Books](1.png)
+
+
+## Installation
+
+1. Clone repo
+2. run `npm install`
+
+## Usage
+
+1. run `node server.js`
+2. Navigate to `localhost:4444`
